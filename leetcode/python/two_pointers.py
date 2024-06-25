@@ -49,4 +49,28 @@ class ArrayIntersectionSolution2:
 # =========================== END OF QUESTION 350 ==================================
 
 
+# =========================== START OF QUESTION LEETCODE 283. Move Zeroes ==================================
+class MoveZeroeSolution:
+  def moveZeros(self, nums: List[int]) -> None:
+    prev_index = 0
+    for i in range(0, len(nums)):
+      if nums[i] != 0:
+        temp = nums[prev_index]
+        nums[prev_index] = nums[i]
+        nums[i] = temp
+        prev_index += 1
+
+    return nums
+
+# solution = MoveZeroeSolution()
+# print(solution.moveZeros([0,1,0,3,12]))
+# print(solution.moveZeros([3,1,3,12,4, 0, 0, 6, 5]))
+
+# =========================== END OF QUESTION LEETCODE 283. Move Zeroes ==================================
+
+# =========================== START OF QUESTION LEETCODE 226. Invert Binary Tree ==================================
+  
+# =========================== END OF QUESTION LEETCODE 226. Invert Binary Tree ==================================
+
+
 

@@ -38,5 +38,3 @@ class ClimbingStairs:
 # new_solution = ClimbingStairs()
 # print(new_solution.climbingStairs(3))
 
-
-i'm thinking of sliding window, what do you think?

@@ -27,3 +27,30 @@ const usingCallbacks = () => {
 };
 
 // usingCallbacks();
+
+const object_operations = () => {
+  const person = {
+    name: "azw",
+  };
+  // console.log(person.age);
+  console.log(Object.keys(person).length);
+};
+
+// object_operations();
+
+const test3 = () => {
+  // const str_arr = "capitalize";
+  // console.log(str_arr[0].toUpperCase() + str_arr.slice(1));
+  const dateObj = new Date();
+  // const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  // console.log(`${month}/${dateObj.getDate()}/${dateObj.getFullYear()}`);
+  // console.log(dateObj.getTime()); // this gives a timestamp
+  // console.log("test".startsWith("te"));
+  const newObj = {
+    name: "John",
+  };
+  newObj.last_name = "Doe";
+  // console.log(newObj);
+};
+
+// test3();

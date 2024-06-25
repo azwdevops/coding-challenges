@@ -33,7 +33,9 @@ class TwoSumSolution:
         my_dict[diff] = i
     return []
 
-new_solution = TwoSumSolution()
-print(new_solution.twoSum([2,7,11,15], 9))
+# new_solution = TwoSumSolution()
+# print(new_solution.twoSum([2,7,11,15], 9))
 
 # =================== END OF LEETCODE 1. Two Sum ======================================
+
+

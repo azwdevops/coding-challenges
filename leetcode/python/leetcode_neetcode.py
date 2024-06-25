@@ -533,9 +533,234 @@ class ThreeSumSolution:
 # =================== END OF LEETCODE 15. 3Sum ================================================
 
 # =================== START OF LEETCODE 11. Container With Most Water ================================================
-class ContainerWithMostWater:
+class ContainerWithMostWaterSolution:
   def maxArea(self, height: List[int]) -> int:
-    pass
+    result = 0
+    left, right = 0, len(height) - 1
+
+    while left < right:
+      area = (right - left) * min(height[left], height[right])
+      result = max(result, area)
+
+      if height[left] < height[right]:
+        left += 1
+      else:
+        right -= 1
+
+    return result
 
 # =================== END OF LEETCODE 11. Container With Most Water ================================================
 
+
+# =================== START OF LEETCODE 191. Number of 1 Bits ================================================
+class Numberof1BitsSolution:
+  def hammingWeight(self, n: int) -> int:
+    result = 0
+    while n > 0:
+      result += n % 2
+      n = n >> 1
+    return result
+  
+    # solution 2
+    result = 0
+    while n > 0:
+      n &= (n-1)
+      result += 1
+
+    return result
+# =================== END OF LEETCODE 191. Number of 1 Bits ================================================
+
+
+# =================== START OF LEETCODE 338. Counting Bits ================================================
+class CountingBitsSolution:
+  def countBits(self, n: int) -> List[int]:
+    dp = [0] * (n + 1)
+    offset = 1
+    for i in range(1, n+1):
+      if offset * 2 == i:
+        offset = i
+      dp[i] = 1 + dp[i - offset]
+    return dp
+
+# =================== END OF LEETCODE 338. Counting Bits ================================================
+
+
+# =================== START OF LEETCODE 268. Missing Number ================================================
+class MissingNumberSolution:
+  def missingNumber(self, nums: List[int]) -> int:
+    result = len(nums)
+    for i in range(len(nums)):
+      result += (i - nums[i])
+    return result
+# =================== END OF LEETCODE 268. Missing Number ================================================
+
+
+# =================== START OF LEETCODE 190. Reverse Bits ================================================
+class ReverseBitsSolution:
+  def reverseBis(self, n: int) -> int:
+    result = 0
+    for i in range(32):
+      bit = (n >> i) & 1
+      result = result | (bit << (31 - i))
+
+    return result
+# =================== END OF LEETCODE 190. Reverse Bits ================================================
+
+
+# =================== START OF LEETCODE 70. Climbing Stairs ================================================
+class ClimbingStairsSolution:
+  def climbStairs(self, n: int) -> int:
+    one, two = 1, 1
+    for i in range(n - 1):
+      temp = one
+      one = one + two
+      two = temp
+
+    return one
+# =================== END OF LEETCODE 70. Climbing Stairs ================================================
+
+# =================== START OF LEETCODE 322. Coin Change ================================================
+class CoinChangeSolution:
+  def coinChange(self, coins: List[int], amount: int) -> int:
+    dp = [amount + 1] * (amount + 1)
+    dp[0] = 0
+    for a in range(1, amount + 1):
+      for coin in coins:
+        if a - coin >= 0:
+          dp[a] = min(dp[a], 1 + dp[a - coin])
+    
+    return dp[amount] if dp[amount] != amount + 1 else -1
+# =================== END OF LEETCODE 322. Coin Change ================================================
+
+
+# =================== START OF LEETCODE 300. Longest Increasing Subsequence ================================================
+class LongestIncreasingSubsequenceSolution:
+  def lengthOfLIS(self, nums: List[int]) -> int:
+    LIS = [1] * len(nums)
+    for i in range(len(nums) -1, -1, -1):
+      for j in range(i + 1, len(nums)):
+        if nums[i] < nums[j]:
+          LIS[i] = max(LIS[i], 1 + LIS[j])
+    return max(LIS)
+
+# =================== END OF LEETCODE 300. Longest Increasing Subsequence ================================================
+
+# =================== START OF LEETCODE 1143. Longest Common Subsequence ================================================
+class LongestCommonSubsequenceSolution:
+  def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+    dp = [[0 for j in range(len(text2) + 1)] for i in range(len(text1) + 1)]
+    for i in range(len(text1) - 1, -1, -1):
+      for j in range(len(text2) - 1, -1, -1):
+        if text1[i] == text1[j]:
+          dp[i][j] = 1 + dp[i + 1][j + 1]
+        else:
+          dp[i][j] = max(dp[i][j + 1], dp[i + 1], [j])
+
+    return dp[0][0]
+# =================== END OF LEETCODE 1143. Longest Common Subsequence ================================================
+
+
+# =================== START OF LEETCODE 139. Word Break ================================================
+class WordBreakSolution:
+  def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+    dp = [False] * (len(s) + 1)
+    dp[len(s)] = True
+    for i in range(len(s) - 1, -1, -1):
+      for w in wordDict:
+        if (i + len(w)) <= len(s) and s[i:i+len(w)] == w:
+          dp[i] = dp[i + len(w)]
+        if dp[i]:
+          break
+    return dp[0]
+# =================== END OF LEETCODE 139. Word Break ================================================
+
+
+# =================== START OF LEETCODE 39. Combination Sum ================================================
+class CombinationSumSolution:
+  def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+    result = []
+    def dfs(i, current, total):
+      if total == target:
+        result.append(current.copy())
+        return 
+      
+      if i >= len(candidates) or total > target:
+        return
+      
+      current.append(candidates[i])
+      dfs(i, current, total + candidates[i])
+      current.pop()
+      dfs(i + 1, current, total)
+
+    dfs(0, [], 0)
+
+    return result
+# =================== END OF LEETCODE 39. Combination Sum ================================================
+
+
+# =================== START OF LEETCODE 198. House Robber ================================================
+class HouseRobberSolution:
+  def rob(self, nums: List[int]) -> int:
+    rob1, rob2 = 0, 0
+
+    for n in nums:
+      temp = max(n + rob1, rob2)
+      rob1 = rob2
+      rob2 = temp
+
+    return rob2
+
+# =================== END OF LEETCODE 198. House Robber ================================================
+
+
+# =================== START OF LEETCODE 213. House Robber II ================================================
+class HouseRobber2Solution:
+  def rob(self, nums: List[int]) -> int:
+    return max(nums[0], self.helper(nums[1:]), self.helper(nums[:-1]))
+
+
+  def helper(self, nums):
+    rob1, rob2 = 0, 0
+    for n in nums:
+      newRob = max(rob1 + n, rob2)
+      rob1 = rob2
+      rob2 = newRob
+
+    return rob2
+  
+# =================== END OF LEETCODE 213. House Robber II ================================================
+
+
+# =================== START OF LEETCODE 91. Decode Ways ================================================
+class DecodeWaySolution:
+  def numDecodings(self, s: str) -> int:
+    dp = {len(s): 1}
+
+    def dfs(i):
+      if i in dp:
+        return dp[i]
+      if s[i] == '0':
+        return 0
+      
+      result = dfs(i + 1)
+      if (i + 1 < len(s) and (s[i] == '1' or (s[i] == '2' and s[i+1] in '0123456'))):
+        result += dfs[i + 2]
+
+      dp[i] = result
+
+      return result
+# =================== END OF LEETCODE 91. Decode Ways ================================================
+
+
+# =================== START OF LEETCODE 62. Unique Paths ================================================
+class UniquePathSolution:
+  def uniquePaths(self, m: int, n: int) -> int:
+    row = [1] * n
+    for i in range(m - 1):
+      newRow = [1] * n
+      for j in range(n - 2, -1, -1):
+        newRow[j] = newRow[j + 1] + row[j]
+      row = newRow
+
+    return row[0]
+# =================== END OF LEETCODE 62. Unique Paths ================================================

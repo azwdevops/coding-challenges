@@ -1,9 +1,18 @@
-def dec_to_bin(n):
-  bin_str = ''
-  if n == 1:
-    return bin_str + '1'
-  bin_str += str(n % 2)
-  
-  return bin_str + dec_to_bin(n // 2)
+def decimal_to_binary(number, result=''):
+  if number == 0:
+    return result
+  result = str(number % 2) + result
+  return decimal_to_binary(number // 2, result)
 
-print(dec_to_bin(25))
+
+# print(decimal_to_binary(25))
+# print(decimal_to_binary(10))
+
+def bit_and(n):
+  bit_str = decimal_to_binary(n)
+  result = 0
+  for i in bit_str:
+    result &= int(i)
+  return result
+
+# print(bit_and(5))

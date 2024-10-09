@@ -1,4 +1,7 @@
 from typing import List
+from collections import defaultdict
+
+
 # leetcode 1876
 class Solution1876:
     def countGoodSubstrings(self, s: str) -> int:
@@ -229,21 +232,49 @@ class Solution643:
 class Solution3095:
   def minimumSubarrayLength(self, nums: List[int], k: int) -> int:
     n = len(nums)
-    min_length = n + 1 # same as infinity since the largest subarray is of length n + 1
+    min_length = float('inf') # same as infinity since the largest subarray is of length n + 1
     current_or = 0
     left = 0
     for right in range(n):
       current_or |= nums[right]
-      while current_or >= k:
+      while current_or >= k and left <= right:
         min_length = min(min_length, right - left + 1)
-        current_or &= ~nums[left]
+        current_or ^= nums[left]
         left += 1
-    return min_length if min_length < n + 1 else -1
+    return min_length if min_length != n + 1 else -1
   
 # solution = Solution3095()
 # print(solution.minimumSubarrayLength([1,2,3], 2))
 # print(solution.minimumSubarrayLength([2,1,8], 10))
 # print(solution.minimumSubarrayLength([1,2], 0))
 
-# TODO INDEX OUT OF RANGE PENDING ABOVE
+
+# leetcode 2760
+class Solution2760:
+  def longestAlternatingSubarray(self, nums: List[int], threshold: int) -> int:
+    n = len(nums)
+    max_length = 0 # initialize the maximum length to 0
+    left = 0
+    while left < n:
+      # find the starting point of the subarray which must be an even number
+      if nums[left] % 2 != 0 or nums[left] > threshold:
+        left += 1
+        continue
+      
+      # initialize the right pointer and the length of the current subarray
+      right = left
+      current_length = 0
+      while right < n and nums[right] <= threshold:
+        if right > left and nums[right] % 2 == nums[right - 1] % 2:
+          break
+        current_length += 1
+        right += 1
+      max_length = max(max_length, current_length)
+      left += 1
+    return max_length
+  
+# solution = Solution2760()
+# print(solution.longestAlternatingSubarray([3,2,5,4], 5))
+# print(solution.longestAlternatingSubarray([1,2], 2))
+# print(solution.longestAlternatingSubarray([2, 3, 4, 5], 4))
 

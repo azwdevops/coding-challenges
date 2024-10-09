@@ -1226,3 +1226,51 @@ class ConstructBinarySearchTreefromPreorderTraversalSolution:
 
 
 
+# leetcode 402
+class Solution402:
+  def removeKdigits(self, num: str, k: int) -> str:
+    stack = []
+    number_to_remove = k
+    for char in num:
+      while k and stack and stack[-1] > char:
+        stack.pop()
+        number_to_remove -= 1
+      stack.append(char)
+    answer = ''.join(stack[0:len(num) - k]).lstrip('0')
+    if len(answer):
+      return answer
+    else:
+      return '0'
+
+# solution = Solution402()
+# print(solution.removeKdigits('1432219', 3))
+# print(solution.removeKdigits('10200', 1))
+# print(solution.removeKdigits('10', 2))
+# print(solution.removeKdigits('1173', 2))
+
+
+# leetcode 993
+class Solution993:
+  def isCousins(self, root: Optional[TreeNode], x: int, y: int) -> bool:
+    x_info = []
+    y_info = []
+    depth = 0
+    parent = None
+    if root is None:
+      return False
+    self.dfs(root, x, y, depth, parent, x_info, y_info)
+    return x_info[0][0] == y_info[0][0] and x_info[0][1] != y_info[0][1]
+  
+  def dfs(self, root, x, y, depth, parent, x_info, y_info):
+    if root is None:
+      return None
+    if root.val == x:
+      x_info.append((depth, parent))
+    if root.val == y:
+      y_info.append((depth, parent))
+
+    self.dfs(root.left, x, y, depth + 1, root, x_info, y_info)
+    self.dfs(root.right, x, y, depth + 1, root, x_info, y_info)
+
+
+# leetcode 
